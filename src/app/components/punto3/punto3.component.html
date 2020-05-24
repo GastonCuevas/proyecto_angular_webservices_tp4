@@ -1,0 +1,86 @@
+<form class="card" #formregistro="ngForm">
+    <div class="card-header text-center" > --Registro de Pasajes--</div>
+      <div class="card-body">
+        <div class="row form-group">
+          <label class="col-sm-12 col-md-4">DNI:</label>
+          <input class="form-control col-sm-12 col-md-8" type="text" placeholder="Ingrese el DNI" name="txtdni" onkeypress='return event.charCode >= 48 && event.charCode <= 57' required minlength="7" [(ngModel)]= "venta.dnipasajero" #dnipasajero="ngModel"/>
+          <div *ngIf="dnipasajero.invalid && (dnipasajero.dirty || dnipasajero.touched)" class="alert alert-danger">
+            <div *ngIf="dnipasajero.errors.required">
+                DNI es un campo requerido
+            </div>
+            <div *ngIf="dnipasajero.errors.minlength">
+                El DNI debe tener almenos 7 dígitos
+            </div>
+          </div>
+        </div>
+      <div class="row form-group">
+        <label class="col-sm-12 col-md-4" >Precio:</label>
+        <input class="form-control col-sm-12 col-md-8" type="number" placeholder="Ingrese valor del pasaje ($)" name="txtprecio" (change)="mostrarPrecio()" required [(ngModel)]= "monto" #precio="ngModel"/>
+        <div *ngIf="precio.invalid && (precio.dirty || precio.touched)" class="alert alert-danger">
+            <div *ngIf="precio.errors.required">
+                Precio es un campo requerido
+            </div>
+          </div>
+      </div>
+      <div class="row form-group">
+        <label class="col-sm-12 col-md-4" >Categoría:</label>
+        <select name="categoria" id="categoria" class="form-control col-sm-12 col-md-8" required [(ngModel)]= "venta.categoriapasajero" (change)="calcularDescuento()" #categoria="ngModel">
+            <option value="s" selected>--Seleccione Categoría--</option>
+            <option value="m">Menor</option>
+            <option value="a">Adulto</option>
+            <option value="j">Jubilado</option>
+        </select>
+        <div *ngIf="categoria.invalid && (categoria.dirty || categoria.touched)" class="alert alert-danger">
+            <div *ngIf="categoria.errors.required">
+                Categoría es un campo requerido
+            </div>
+          </div>
+      </div>
+      <div class="row form-group" *ngIf="mostrar1 && mostrar2">
+            <div class="col"><i class="fas fa-coins" style="color: red;"></i> Total: ${{venta.precio}}</div>
+      </div>
+      <div class="row form-group">
+        <button type="button" class="btn btn-primary" style="margin-right: 20px;" (click)="registrarVenta()" [disabled]="!formregistro.form.valid"><i class="fas fa-paper-plane"></i> Enviar</button>
+        <button type="reset" class="btn btn-primary" (click)="limpiarVenta()"><i class="fas fa-broom"></i> Limpiar</button>            
+      </div>
+    </div>
+</form>
+<div class="card-header text-center">--Listado de Pasajes--</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">DNI</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Categoría</th>
+            <th scope="col"><i class="far fa-calendar-alt" style="color: red;"></i> Fecha de transacción</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of ventas">
+            <td>{{item.dnipasajero}}</td>
+            <td>{{item.precio | currency:'EUR'}}</td>
+            <td>{{item.categoriapasajero | uppercase}}</td>
+            <td>{{item.fecha | date:'shortDate'}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="card-header text-center">--Resumen Pasajeros--</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Total Pasajeros</th>
+            <th scope="col">Adultos</th>
+            <th scope="col">Menores</th>
+            <th scope="col">Jubilados</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{cantTotal}}</td>
+            <td>{{cantAdultos}}</td>
+            <td>{{cantMenores}}</td>
+            <td>{{cantJubilados}}</td>
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,34 @@
+<div class="container">
+        <header class="row bg-info">
+            <div class="col-md-2">
+              <img src="assets/Imagenes/logo.png" class="imagen-logo">
+            </div>
+            <div class="col-md-10 bg-light">
+              <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="home.html"><i class="fab fa-neos"></i> Notiday</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                  <ul class="navbar-nav">
+                    <li class="nav-item" routerLinkActive="active">
+                      <a class="nav-link" [routerLink]="['home']"><i class="fas fa-globe-americas"></i> Internacionales</a>
+                    </li>
+                    <li class="nav-item" routerLinkActive="active">
+                      <a class="nav-link" [routerLink]="['punto1']"><i class="fas fa-sms"></i> Mensajería</a>
+                    </li>
+                    <li class="nav-item" routerLinkActive="active">
+                      <a class="nav-link" [routerLink]="['punto2']"><i class="fas fa-vote-yea"></i> Curso</a>
+                    </li>
+                    <li class="nav-item" routerLinkActive="active">
+                      <a class="nav-link" [routerLink]="['punto3']"><i class="fas fa-route"></i> Viajes</a>
+                    </li>
+                    <li class="nav-item" routerLinkActive="active">
+                      <a class="nav-link" [routerLink]="['punto4']"><i class="fas fa-gamepad"></i> Juegos</a>
+                    </li>
+                  </ul>
+                </div>
+              </nav>
+            </div>
+           </header>
+</div>

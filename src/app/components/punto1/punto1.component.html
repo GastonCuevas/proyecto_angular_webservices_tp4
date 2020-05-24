@@ -1,0 +1,59 @@
+<form class="card" #formmensaje="ngForm">
+    <div class="card-header text-center" > --Envío de Mensajes--</div>
+      <div class="card-body">
+        <div class="row form-group">
+          <label class="col-sm-12 col-md-4">Para:</label>
+          <input class="form-control col-sm-12 col-md-8" type="number" placeholder="Ingrese Nº de Destinatario" name="txtpara" required [(ngModel)] = "mensaje.para" #para="ngModel"/>
+          <div *ngIf="para.invalid && (para.dirty || para.touched)" class="alert alert-danger">
+            <div *ngIf="para.errors.required">
+                El Destinatario es un campo requerido!
+            </div>
+          </div>
+        </div>
+      <div class="row form-group">
+        <label class="col-sm-12 col-md-4" >Desde:</label>
+        <input class="form-control col-sm-12 col-md-8" type="number" placeholder="Ingrese Nº de Remitente" name="txtdesde" required [(ngModel)] = "mensaje.desde" #desde="ngModel"/>
+        <div *ngIf="desde.invalid && (desde.dirty || desde.touched)" class="alert alert-danger">
+          <div *ngIf="desde.errors.required">
+              El Remitente es un campo requerido!
+          </div>
+        </div>
+      </div>
+      <label>Longitud del texto escrito (Máximo: 50): {{tamTexto}} </label>
+      <div class="row form-group">
+        <textarea class="form-control" [maxlength] = "tamMaxTexto" rows="5" placeholder="Escriba AQUÍ su mensaje..." name="txtTexto" required [(ngModel)] = "mensaje.texto" (ngModelChange) = "cambiarTamTexto()" #texto="ngModel">  
+        </textarea>
+        <div *ngIf="texto.invalid && (texto.dirty || texto.touched)" class="alert alert-danger">
+          <div *ngIf="texto.errors.required">
+              El mensaje es un campo requerido!
+          </div>
+          <div *ngIf="texto.errors.maxlength">
+              El mensaje puede tener como máximo 50 caracteres
+          </div>
+        </div>
+      </div>
+      <div class="row form-group">
+        <button type="button" class="btn btn-primary" style="margin-right: 20px;" (click)="enviarMensaje()" [disabled]="!formmensaje.form.valid"><i class="fas fa-paper-plane"></i> Enviar</button>
+        <button type="reset" class="btn btn-primary" (click)="limpiarMensaje()" ><i class="fas fa-broom"></i> Limpiar</button>            
+      </div>
+    </div>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Remitente</th>
+            <th>Destinatario</th>
+            <th>Mensaje</th>
+            <th><i class="far fa-calendar-alt" style="color: red;"></i> Fecha de Envio</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of mensajes">
+            <td>{{item.desde}}</td>
+            <td>{{item.para}}</td>
+            <td>{{item.texto}}</td>
+            <td>{{item.fecha | date:'mediumDate'}}</td>
+        </tr>
+    </tbody>
+</table>

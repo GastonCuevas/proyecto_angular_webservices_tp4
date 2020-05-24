@@ -1,0 +1,38 @@
+.card-header{
+    background-image: linear-gradient(rgb(0, 174, 255),rgb(0, 81, 255));
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+}
+
+.titulos{
+    font-size: 25px;
+    color: red;
+    text-align: center;
+}
+
+.cartel{
+    font-size: 30px;
+    text-align: center;
+}
+
+.card-img-pers{
+    height: 30em;
+    width: 30em;
+    display: block;
+    margin: auto;
+}
+
+th{
+    text-align: center;
+}
+
+td{
+    text-align: center;
+}
+
+h2{
+    background-image: linear-gradient(rgb(0, 174, 255),rgb(0, 81, 255));
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    text-align: center;
+}

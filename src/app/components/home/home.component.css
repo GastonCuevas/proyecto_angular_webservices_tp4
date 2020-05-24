@@ -1,0 +1,65 @@
+.card-img-pers{
+    display:block;
+    margin-left:auto;
+    margin-right: auto;
+    height: 12em;
+}
+
+content{
+    border: 4px rgb(206, 199, 199);
+    border-right: 0px;
+    border-left: 0px;
+    border-style: solid;
+}
+
+.content-table-img{
+    margin: auto;
+}
+
+aside{
+    border: 4px rgb(206, 199, 199);
+    border-right: 0px;
+    border-style: solid;
+}
+
+.aside-img{
+    width: 15em;
+}
+
+.card-title-pers{
+    color: lightcoral;
+}
+
+.card-title-pers{
+    padding-right: 0px;
+    margin-right: 0px;
+    background-color:red;
+    color: white;
+}
+
+
+.card-title-signo{
+    text-align: center;
+    color: white;
+    margin-top: 45px;
+}
+
+.card-img-signo{
+    height: 3em;
+    width: 3em;
+}
+
+.card-title-signo{
+    text-align: center;
+    color: white;
+}
+
+.card-title-signo2{
+    color: white;
+    font-size: 15px;
+}
+
+.card-img-personalizado{
+    width: 20em;
+    height: 25em;
+}
