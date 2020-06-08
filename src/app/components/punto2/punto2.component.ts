@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Asistente } from './../../models/asistente';
+import { Noticia } from './../../models/noticia';
+import { NoticiaService } from 'src/app/services/noticia.service';
 
 @Component({
   selector: 'app-punto2',
@@ -8,35 +9,31 @@ import { Asistente } from './../../models/asistente';
 })
 export class Punto2Component implements OnInit {
 
-  asistente: Asistente;
-  constancia: boolean = false;
-  asistentes: Array<Asistente>;
+  category: string;
+  noticia: Noticia;
+  noticias: Array<Noticia>;
 
-  constructor() { 
-    this.asistente = new Asistente();
-    this.asistente.usuario = "usuario@ejemplo.ar";
-    this.asistente.nombreOrganizacion = "Organización Unju";
-    this.asistente.requiereConstancia = "Si";
-  
-    this.asistentes = new Array<Asistente>();
-    this.asistentes.push(this.asistente);
-
-    this.asistente = new Asistente();
+  constructor(private noticiaService: NoticiaService) { 
+    this.noticia = new Noticia();
+    this.noticias = new Array<Noticia>();
   }
 
   ngOnInit(): void {
   }
 
-  public agregarAsistente(){
+  public cargarNoticias(){
+    this.noticiaService.listNoticias(this.category).subscribe(
+      (result) => {
+        this.noticias = new Array<Noticia>(); 
+        result['arts'].forEach(element => {
+          this.noticia= new Noticia(); 
+          Object.assign(this.noticia,element);
+          this.noticias.push(this.noticia);
+        });
+        console.log(this.noticias);
+    }, 
+    error => { alert("Error en la petición"); }
+    )
 
-    if(this.constancia == true){
-      this.asistente.requiereConstancia = "Si";
-    }else{
-      this.asistente.requiereConstancia = "No";
-    }
-
-    this.asistentes.push(this.asistente);
-    this.asistente = new Asistente();
-    this.constancia = false;
   }
 }

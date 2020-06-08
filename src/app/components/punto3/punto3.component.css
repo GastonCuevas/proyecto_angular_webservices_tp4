@@ -18,3 +18,8 @@ h2{
     font-size: 20px;
     text-align: center;
 }
+
+.card-img-personalizado{
+    width: 20em;
+    height: 25em;
+}

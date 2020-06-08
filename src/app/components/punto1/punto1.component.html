@@ -1,59 +1,97 @@
-<form class="card" #formmensaje="ngForm">
-    <div class="card-header text-center" > --Envío de Mensajes--</div>
-      <div class="card-body">
-        <div class="row form-group">
-          <label class="col-sm-12 col-md-4">Para:</label>
-          <input class="form-control col-sm-12 col-md-8" type="number" placeholder="Ingrese Nº de Destinatario" name="txtpara" required [(ngModel)] = "mensaje.para" #para="ngModel"/>
-          <div *ngIf="para.invalid && (para.dirty || para.touched)" class="alert alert-danger">
-            <div *ngIf="para.errors.required">
-                El Destinatario es un campo requerido!
-            </div>
-          </div>
-        </div>
-      <div class="row form-group">
-        <label class="col-sm-12 col-md-4" >Desde:</label>
-        <input class="form-control col-sm-12 col-md-8" type="number" placeholder="Ingrese Nº de Remitente" name="txtdesde" required [(ngModel)] = "mensaje.desde" #desde="ngModel"/>
-        <div *ngIf="desde.invalid && (desde.dirty || desde.touched)" class="alert alert-danger">
-          <div *ngIf="desde.errors.required">
-              El Remitente es un campo requerido!
-          </div>
-        </div>
-      </div>
-      <label>Longitud del texto escrito (Máximo: 50): {{tamTexto}} </label>
-      <div class="row form-group">
-        <textarea class="form-control" [maxlength] = "tamMaxTexto" rows="5" placeholder="Escriba AQUÍ su mensaje..." name="txtTexto" required [(ngModel)] = "mensaje.texto" (ngModelChange) = "cambiarTamTexto()" #texto="ngModel">  
-        </textarea>
-        <div *ngIf="texto.invalid && (texto.dirty || texto.touched)" class="alert alert-danger">
-          <div *ngIf="texto.errors.required">
-              El mensaje es un campo requerido!
-          </div>
-          <div *ngIf="texto.errors.maxlength">
-              El mensaje puede tener como máximo 50 caracteres
-          </div>
-        </div>
-      </div>
-      <div class="row form-group">
-        <button type="button" class="btn btn-primary" style="margin-right: 20px;" (click)="enviarMensaje()" [disabled]="!formmensaje.form.valid"><i class="fas fa-paper-plane"></i> Enviar</button>
-        <button type="reset" class="btn btn-primary" (click)="limpiarMensaje()" ><i class="fas fa-broom"></i> Limpiar</button>            
-      </div>
-    </div>
-</form>
+<div class="row">
+    <content class="col-md-8 d-none d-md-block bg-light">
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Remitente</th>
-            <th>Destinatario</th>
-            <th>Mensaje</th>
-            <th><i class="far fa-calendar-alt" style="color: red;"></i> Fecha de Envio</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let item of mensajes">
-            <td>{{item.desde}}</td>
-            <td>{{item.para}}</td>
-            <td>{{item.texto}}</td>
-            <td>{{item.fecha | date:'mediumDate'}}</td>
-        </tr>
-    </tbody>
-</table>
+       <div class="table-responsive">
+           <table class="table table-striped ">
+
+               <tr class="table-danger">
+                   <th colspan="5" style="text-align: center;">
+                    <h4>Conversor de Divisas</h4>
+                    <p>Solo la columna de Pesos Argentinos -ARS- está actualizada (Web Service)</p>
+                    </th>
+               </tr>
+               
+               <tr>
+               <th></th>
+               <th></th>
+               <th><img src="assets/Imagenes/usa.png" class="content-table-img"><p>USD</p></th>
+               <th><img src="assets/Imagenes/eu.png" class="content-table-img"><p>EU</p></th>
+               <th><img src="assets/Imagenes/arg.png" class="content-table-img"><p>ARS</p></th>
+               </tr>
+               <tr>
+                   <td><img src="assets/Imagenes/usa.png" class="content-table-img"></td>
+                   <td>1 USD <P>Inverso</P></td>
+                   <td>1.000000 <p>1.000000</p></td>
+                   <td>0.919901 <p>1.087074</p></td>
+                   <td>{{convUSDaARS}} <p>{{convARSaUSD}}</p></td>    
+               </tr>
+               <tr>
+                   <td><img src="assets/Imagenes/eu.png" class="content-table-img"></td>
+                   <td>1 EUR <P>Inverso</P></td>
+                   <td>1.087074 <p>0.919901</p></td>
+                   <td>1.000000 <p>1.000000</p></td>
+                   <td>{{convUEaARS}} <p>{{convARSaUE}}</p></td>
+               </tr>
+               <tr>
+                   <td><img src="assets/Imagenes/uk.png" class="content-table-img"></td>
+                   <td>1 GBP <p>Inverso</p></td>
+                   <td>1.232332 <p>0.811469</p></td>
+                   <td>1.133623 <p>0.882127</p></td>
+                   <td>{{convUKaARS}} <p>{{convARSaUK}}</p></td>
+               </tr>
+               <tr>
+                   <td><img src="assets/Imagenes/ru.png" class="content-table-img"></td>
+                   <td>1 RUB <P>Inverso</P></td>
+                   <td>0.013226 <p>75.61134</p></td>
+                   <td>0.012166 <p>82.19511</p></td>
+                   <td>{{convRUBaARS}} <p>{{convARSaRUB}}</p></td>
+               </tr>
+           </table>
+       </div>
+     
+    </content>
+
+    <aside class="col-sm-12 col-md-4 bg-light">
+        <div class="row justify-content-center" style="background-color: rgb(40, 30, 182);">
+           <h4 style="color: white;">Conversor de Divisas</h4>
+       </div>
+       
+       <div class="row bg-primary justify-content-center">
+           <form #formdivisa="ngForm">
+             <div class="form-group"><p></p>
+               <label for="inputNumber" style="color: white;">Cantidad</label>
+               <input type="text" class="form-control" name="inputValor" id="inputTextValor" placeholder="Cantidad" style="text-align: right;" [(ngModel)]="transaccionConvert.from_value">
+             </div>
+             <div class="form-group">
+                 <label for="select1" style="color: white;">De</label><p></p>
+                 <select name="moneda" id="select1" [(ngModel)]="transaccionConvert.from_type">
+                   <option value="s">--Elegir Moneda--</option>
+                     <option value="USD">USD Dólares EEUU</option>
+                     <option value="EUR">EU Euro EU</option>
+                     <option value="ARS">ARS Pesos Argentinos</option>
+                     <option value="GBP">GBP Libra Esterlina GBP</option>
+                     <option value="RUB">RUB Rublo Ruso RUB</option>
+                 </select>
+             </div>
+             <div class="form-group">
+               <label for="select2" style="color: white;">A</label><p></p>
+               <select name="moneda2" id="select2" [(ngModel)]="transaccionConvert.to_type">
+                 <option value="s">--Elegir Moneda--</option>
+                   <option value="USD">USD Dólares EEUU</option>
+                   <option value="EUR">EU Euro EU</option>
+                   <option value="ARS">ARS Pesos Argentinos</option>
+                   <option value="GBP">GBP Libra Esterlina GBP</option>
+                   <option value="RUB">RUB Rublo Ruso RUB</option>
+               </select>
+           </div>
+           <div class="form-group">
+               <label for="my-input" style="color: white;">Conversión: </label><p></p>
+               <label for="my-input" style="color: white;"><i class="fas fa-dollar-sign"></i> {{transaccionConvert.result}}</label>
+           </div>
+           <div class="form-group">
+               <button type="button" class="btn btn-warning  fas my-5 " (click)="convertir()"><h5>Convertir <i class="fas fa-arrow-right text-white " style="padding-left: 70px;"></i></h5></button>
+           </div>
+           </form>
+         </div>
+    </aside>
+  </div>

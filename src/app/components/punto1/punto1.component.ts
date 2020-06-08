@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Mensaje } from './../../models/mensaje';
+import { TransaccionService } from 'src/app/services/transaccion.service';
+import { Transaccion } from './../../models/transaccion';
+
 
 @Component({
   selector: 'app-punto1',
@@ -8,43 +10,109 @@ import { Mensaje } from './../../models/mensaje';
 })
 export class Punto1Component implements OnInit {
 
-  mensaje: Mensaje;
-  tamMaxTexto: number = 50;
-  tamTexto: number;
+  transaccion: Transaccion;
+  transaccionConvert: Transaccion;
 
-  mensajes: Array<Mensaje>;
+  monto: string = "1";
+  ars: string = "ARS";
 
-  constructor() {
-    this.mensaje = new Mensaje();
-    this.mensaje.desde = 3884373832;
-    this.mensaje.para = 3885717372;
-    this.mensaje.texto = "Hola, ¿Cómo estas?";
-    this.mensaje.fecha = new Date(2020,3,15);
+  convUSDaARS: string;
+  convARSaUSD: string;
+  convUEaARS: string;
+  convARSaUE: string;
+  convUKaARS: string;
+  convARSaUK: string;
+  convRUBaARS: string;
+  convARSaRUB: string;
+  moneda: string;
 
-    this.mensajes = new Array<Mensaje>();
-    this.mensajes.push(this.mensaje);
+  constructor(private transaccionService: TransaccionService) {
+    this.transaccion = new Transaccion();
+    this.transaccionConvert = new Transaccion();
 
-    this.mensaje = new Mensaje();
+    this.moneda = "USD";
+    this.convertidorARS(this.moneda);
+    this.convertidorToARS(this.moneda);
+
+    this.moneda = "EUR";
+    this.convertidorARS(this.moneda);
+    this.convertidorToARS(this.moneda);
+
+    this.moneda = "GBP";
+    this.convertidorARS(this.moneda);
+    this.convertidorToARS(this.moneda);
+
+    this.moneda = "RUB";
+    this.convertidorARS(this.moneda);
+    this.convertidorToARS(this.moneda);
+
+    this.transaccion = new Transaccion();
+
   }
 
   ngOnInit(): void {
   }
 
-  public cambiarTamTexto(){
-    this.tamTexto = this.mensaje.texto.length;
-    console.log(this.tamTexto);
+  public convertir(){
+
+    this.transaccionService.obtenerMoneda(this.transaccionConvert.from_type,this.transaccionConvert.to_type,this.transaccionConvert.from_value).subscribe(
+      (result) => {
+        this.transaccionConvert = result;
+        console.log(this.transaccionConvert);
+      },
+      error => { alert ("Error en la petición"); }
+    )
+
   }
 
-  public enviarMensaje(){
-    this.mensaje.fecha = new Date();
-    this.mensajes.push(this.mensaje);
-    this.mensaje = new Mensaje();
-    this.tamTexto = 0;
+  public convertidorARS(moneda:string){
+
+    this.transaccion = new Transaccion();
+
+    this.transaccionService.obtenerMoneda(this.ars,moneda,this.monto).subscribe(
+      (result) => {
+        this.transaccion = result;
+        console.log(this.transaccion);
+        if(moneda == "USD"){
+          this.convARSaUSD = this.transaccion.result;
+        }else if(moneda == "EUR"){
+          this.convARSaUE = this.transaccion.result;
+        }else if(moneda == "GBP"){
+          this.convARSaUK = this.transaccion.result;
+        }else if(moneda == "RUB"){
+          this.convARSaRUB = this.transaccion.result;
+        }
+      },
+      error => { alert ("Error en la petición"); }
+    )
+
+    this.transaccion = new Transaccion();
+
   }
 
-  public limpiarMensaje(){
-    this.mensaje.fecha = new Date();
-    this.mensaje = new Mensaje();
-    this.tamTexto = 0;
+  public convertidorToARS(moneda:string){
+
+    this.transaccion = new Transaccion();
+
+    this.transaccionService.obtenerMoneda(moneda,this.ars,this.monto).subscribe(
+      (result) => {
+        this.transaccion = result;
+        console.log(this.transaccion);
+        if(moneda == "USD"){
+          this.convUSDaARS = this.transaccion.result;
+        }else if(moneda == "EUR"){
+          this.convUEaARS = this.transaccion.result;
+        }else if(moneda == "GBP"){
+          this.convUKaARS = this.transaccion.result;
+        }else if(moneda == "RUB"){
+          this.convRUBaARS = this.transaccion.result;
+        }
+      },
+      error => { alert ("Error en la petición"); }
+    )
+
+    this.transaccion = new Transaccion();
+
   }
+  
 }

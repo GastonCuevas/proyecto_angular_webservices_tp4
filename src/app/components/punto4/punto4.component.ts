@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AnimalesService } from 'src/app/services/animales.service';
+import { CovidDatos } from 'src/app/models/covid-datos';
+import { CovidService } from 'src/app/services/covid.service';
 
 @Component({
   selector: 'app-punto4',
@@ -8,91 +9,86 @@ import { AnimalesService } from 'src/app/services/animales.service';
 })
 export class Punto4Component implements OnInit {
 
-  animales: Array<any>;
-
   mostrar1: boolean=false;
   mostrar2: boolean=false;
   mostrar3: boolean=false;
   mostrar4: boolean=false;
   mostrar5: boolean=false;
-  iterador: number=0;
-  nombreEsp: string;
-  nombreIng: string;
-  id: number;
-  imagen: string;
-  vidas: number=6;
-  puntaje: number=0;
-  palabra: string;
+  mostrarTabla: boolean=false;
+  province: Array<any>;
 
-  constructor(private animalesservice: AnimalesService) { 
+  datos: CovidDatos;
+  datosPais: Array<CovidDatos>;
+  pais: string;
+  fecha: Date;
+  confirmados: boolean;
+  curados: boolean;
+  fallecidos: boolean;
 
-    this.animales = new Array<any>();
+  constructor(private covidService: CovidService) { 
+
+    this.datos = new CovidDatos();
+    this.datosPais = new Array<CovidDatos>();
+    this.fecha = new Date();
 
   }
 
   ngOnInit(): void {
   }
 
-  obtenerAnimales(){
+  public cargarInfo(){
 
-    const animal = this.animalesservice.obtenerAnimales();
-    this.nombreEsp = animal[this.iterador].nombreEsp;
-    this.nombreIng = animal[this.iterador].nombreIng;
-    this.imagen = animal[this.iterador].imagen;
-    this.id = animal[this.iterador].id;
+    this.mostrarTabla = true;
 
-  }
-
-  iniciarJuego(){
-    this.palabra = "";
-    this.mostrar1 = true;
-    this.mostrar2 = false;
-    this.mostrar3 = false;
-    this.mostrar4 = false;
-    this.mostrar5 = false;
-    this.iterador = 0;
-    this.puntaje = 0;
-    this.vidas = 6;
-    this.obtenerAnimales();
-  }
-
-  comprobar(){
-    const animal = this.animalesservice.obtenerAnimales();
-
-    if(this.palabra == this.nombreIng){
+    if(this.pais=="argentina"){
+      this.mostrar1 = true;
+      this.mostrar2 = false;
+      this.mostrar3 = false;
+      this.mostrar4 = false;
+      this.mostrar5 = false;
+    }else if(this.pais=="spain"){
       this.mostrar1 = false;
-      this.puntaje ++;
-      this.iterador ++;
-      
-      if(this.iterador == 10){
-        this.mostrar5 = true;
-      }else{
-        this.mostrar2=true;
-      }
-    }else{
+      this.mostrar2 = true;
+      this.mostrar3 = false;
+      this.mostrar4 = false;
+      this.mostrar5 = false;
+    }else if(this.pais=="usa"){
       this.mostrar1 = false;
-      this.vidas --;
-      this.iterador ++;
-      this.mostrar3=true;
-      if(this.vidas==0){
-        this.mostrar1 = false;
-        this.mostrar3 = false;
-        this.mostrar4 = true;
-      }
-      else if(this.iterador == 10){
-        this.mostrar1 = false;
-        this.mostrar3 = false;
-        this.mostrar5 = true;
-      }
+      this.mostrar2 = false;
+      this.mostrar3 = true;
+      this.mostrar4 = false;
+      this.mostrar5 = false;
+    }else if(this.pais=="germany"){
+      this.mostrar1 = false;
+      this.mostrar2 = false;
+      this.mostrar3 = false;
+      this.mostrar4 = true;
+      this.mostrar5 = false;
+    }else if(this.pais=="italy"){
+      this.mostrar1 = false;
+      this.mostrar2 = false;
+      this.mostrar3 = false;
+      this.mostrar4 = false;
+      this.mostrar5 = true;
     }
-  }
 
-  continuar(){
-    this.palabra = "";
-    this.mostrar1 = true;
-    this.mostrar2 = false;
-    this.mostrar3 = false;
-    this.obtenerAnimales();
+
+
+
+    this.covidService.obtenerPais(this.pais,this.fecha.toString()).subscribe(
+      (result) => {
+        this.province = result;
+        this.datosPais = new Array<CovidDatos>(); 
+        this.province[0].provinces.forEach(element => {
+          this.datos= new CovidDatos(); 
+          Object.assign(this.datos,element);
+          this.datosPais.push(this.datos);
+        });
+        console.log(this.datos);
+    }, 
+    error => { alert("Error en la petición"); }
+    )
+
   }
 
 }

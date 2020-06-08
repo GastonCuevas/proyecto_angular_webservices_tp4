@@ -1,86 +1,212 @@
-<form class="card" #formregistro="ngForm">
-    <div class="card-header text-center" > --Registro de Pasajes--</div>
-      <div class="card-body">
-        <div class="row form-group">
-          <label class="col-sm-12 col-md-4">DNI:</label>
-          <input class="form-control col-sm-12 col-md-8" type="text" placeholder="Ingrese el DNI" name="txtdni" onkeypress='return event.charCode >= 48 && event.charCode <= 57' required minlength="7" [(ngModel)]= "venta.dnipasajero" #dnipasajero="ngModel"/>
-          <div *ngIf="dnipasajero.invalid && (dnipasajero.dirty || dnipasajero.touched)" class="alert alert-danger">
-            <div *ngIf="dnipasajero.errors.required">
-                DNI es un campo requerido
+<div class="card-header text-center" > --Horóscopo--</div>
+<div class="row card-body" *ngIf="mostrar3">
+  <label class="col-sm-12 col-md-4" >Fecha (Debe seleccionar una fecha para ver el Horóscopo):</label>
+  <input class="form-control col-sm-12 col-md-8" type="date" name="dateFecha" [(ngModel)]= "fecha"/>
+</div>
+<div *ngIf="mostrar1">
+<div class="card-group">
+      <div class="card col-md-4" style="height: 175px;">
+          <div class="row no-gutters">
+            <div class="col-md-4">
+              <img src="assets/Imagenes/signos/aries.jpg" class="card-img" alt="...">
             </div>
-            <div *ngIf="dnipasajero.errors.minlength">
-                El DNI debe tener almenos 7 dígitos
+            <div class="col-md-8 bg-danger">
+              <div class="card-body">
+                <h5 class="card-title card-title-signo">Aries</h5>
+                <p></p>
+                <button type="button" class="btn btn-primary" (click)="mostrarSigno('i')"><i class="fab fa-hornbill"></i> Ver Horóscopo</button>
+              </div>
             </div>
           </div>
         </div>
-      <div class="row form-group">
-        <label class="col-sm-12 col-md-4" >Precio:</label>
-        <input class="form-control col-sm-12 col-md-8" type="number" placeholder="Ingrese valor del pasaje ($)" name="txtprecio" (change)="mostrarPrecio()" required [(ngModel)]= "monto" #precio="ngModel"/>
-        <div *ngIf="precio.invalid && (precio.dirty || precio.touched)" class="alert alert-danger">
-            <div *ngIf="precio.errors.required">
-                Precio es un campo requerido
+        <div class="card col-md-4" style="height: 175px;">
+          <div class="row no-gutters">
+            <div class="col-md-4">
+              <img src="assets/Imagenes/signos/leo.jpg" class="card-img" alt="...">
+            </div>
+            <div class="col-md-8 bg-danger">
+              <div class="card-body">
+                <h5 class="card-title card-title-signo">Leo</h5>
+                <p></p>
+                <button type="button" class="btn btn-primary" (click)="mostrarSigno('y')"><i class="fab fa-hornbill"></i> Ver Horóscopo</button>
+              </div>
             </div>
           </div>
-      </div>
-      <div class="row form-group">
-        <label class="col-sm-12 col-md-4" >Categoría:</label>
-        <select name="categoria" id="categoria" class="form-control col-sm-12 col-md-8" required [(ngModel)]= "venta.categoriapasajero" (change)="calcularDescuento()" #categoria="ngModel">
-            <option value="s" selected>--Seleccione Categoría--</option>
-            <option value="m">Menor</option>
-            <option value="a">Adulto</option>
-            <option value="j">Jubilado</option>
-        </select>
-        <div *ngIf="categoria.invalid && (categoria.dirty || categoria.touched)" class="alert alert-danger">
-            <div *ngIf="categoria.errors.required">
-                Categoría es un campo requerido
+        </div>
+        <div class="card col-md-4" style="height: 175px;">
+          <div class="row no-gutters">
+            <div class="col-md-4">
+              <img src="assets/Imagenes/signos/sagitario.jpg" class="card-img" alt="...">
+            </div>
+            <div class="col-md-8 bg-danger">
+              <div class="card-body">
+                <h5 class="card-title card-title-signo">Sagitario</h5>
+                <p></p>
+                <button type="button" class="btn btn-primary" (click)="mostrarSigno('s')"><i class="fab fa-hornbill"></i> Ver Horóscopo</button>
+              </div>
             </div>
           </div>
-      </div>
-      <div class="row form-group" *ngIf="mostrar1 && mostrar2">
-            <div class="col"><i class="fas fa-coins" style="color: red;"></i> Total: ${{venta.precio}}</div>
-      </div>
-      <div class="row form-group">
-        <button type="button" class="btn btn-primary" style="margin-right: 20px;" (click)="registrarVenta()" [disabled]="!formregistro.form.valid"><i class="fas fa-paper-plane"></i> Enviar</button>
-        <button type="reset" class="btn btn-primary" (click)="limpiarVenta()"><i class="fas fa-broom"></i> Limpiar</button>            
+        </div>
+   </div>
+
+   <div class="card-group">
+      <div class="card col-md-4" style="height: 175px;">
+          <div class="row no-gutters">
+            <div class="col-md-4">
+              <img src="assets/Imagenes/signos/tauro.jpg" class="card-img" alt="...">
+            </div>
+            <div class="col-md-8 bg-danger">
+              <div class="card-body">
+                <h5 class="card-title card-title-signo">Tauro</h5>
+                <p></p>
+                <button type="button" class="btn btn-primary" (click)="mostrarSigno('t')"><i class="fab fa-hornbill"></i> Ver Horóscopo</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card col-md-4" style="height: 175px;">
+          <div class="row no-gutters">
+            <div class="col-md-4">
+              <img src="assets/Imagenes/signos/virgo.jpg" class="card-img" alt="...">
+            </div>
+            <div class="col-md-8 bg-danger">
+              <div class="card-body">
+                <h5 class="card-title card-title-signo">Virgo</h5>
+                <p></p>
+                <button type="button" class="btn btn-primary" (click)="mostrarSigno('v')"><i class="fab fa-hornbill"></i> Ver Horóscopo</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card col-md-4" style="height: 175px;">
+          <div class="row no-gutters">
+            <div class="col-md-4">
+              <img src="assets/Imagenes/signos/capricornio.jpg" class="card-img" alt="...">
+            </div>
+            <div class="col-md-8 bg-danger">
+              <div class="card-body">
+                <h5 class="card-title card-title-signo">Capricornio</h5>
+                <p></p>
+                <button type="button" class="btn btn-primary" (click)="mostrarSigno('u')"><i class="fab fa-hornbill"></i> Ver Horóscopo</button>
+              </div>
+            </div>
+          </div>
+        </div>
+   </div>
+
+   <div class="card-group">
+      <div class="card col-md-4" style="height: 175px;">
+          <div class="row no-gutters">
+            <div class="col-md-4">
+              <img src="assets/Imagenes/signos/gemini.jpg" class="card-img" alt="...">
+            </div>
+            <div class="col-md-8 bg-danger">
+              <div class="card-body">
+                <h5 class="card-title card-title-signo">Géminis</h5>
+                <p></p>
+                <button type="button" class="btn btn-primary" (click)="mostrarSigno('g')"><i class="fab fa-hornbill"></i> Ver Horóscopo</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card col-md-4" style="height: 175px;">
+          <div class="row no-gutters">
+            <div class="col-md-4">
+              <img src="assets/Imagenes/signos/libra.jpg" class="card-img" alt="...">
+            </div>
+            <div class="col-md-8 bg-danger">
+              <div class="card-body">
+                <h5 class="card-title card-title-signo">Libra</h5>
+                <p></p>
+                <button type="button" class="btn btn-primary" (click)="mostrarSigno('l')"><i class="fab fa-hornbill"></i> Ver Horóscopo</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card col-md-4" style="height: 175px;">
+          <div class="row no-gutters">
+            <div class="col-md-4">
+              <img src="assets/Imagenes/signos/aquario.jpg" class="card-img" alt="...">
+            </div>
+            <div class="col-md-8 bg-danger">
+              <div class="card-body">
+                <h5 class="card-title card-title-signo">Aquario</h5>
+                <p></p>
+                <button type="button" class="btn btn-primary" (click)="mostrarSigno('a')"><i class="fab fa-hornbill"></i> Ver Horóscopo</button>
+              </div>
+            </div>
+          </div>
+        </div>
+   </div>
+
+   <div class="card-group">
+      <div class="card col-md-4" style="height: 175px;">
+          <div class="row no-gutters">
+            <div class="col-md-4">
+              <img src="assets/Imagenes/signos/cancer.jpg" class="card-img" alt="...">
+            </div>
+            <div class="col-md-8 bg-danger">
+              <div class="card-body">
+                <h5 class="card-title card-title-signo">Cáncer</h5>
+                <p></p>
+                <button type="button" class="btn btn-primary" (click)="mostrarSigno('c')"><i class="fab fa-hornbill"></i> Ver Horóscopo</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card col-md-4" style="height: 175px;">
+          <div class="row no-gutters">
+            <div class="col-md-4">
+              <img src="assets/Imagenes/signos/scorpio.jpg" class="card-img" alt="...">
+            </div>
+            <div class="col-md-8 bg-danger">
+              <div class="card-body">
+                <h5 class="card-title card-title-signo">Scorpio</h5>
+                <p></p>
+                <button type="button" class="btn btn-primary" (click)="mostrarSigno('e')"><i class="fab fa-hornbill"></i> Ver Horóscopo</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card col-md-4" style="height: 175px;">
+          <div class="row no-gutters">
+            <div class="col-md-4">
+              <img src="assets/Imagenes/signos/picis.jpg" class="card-img" alt="...">
+            </div>
+            <div class="col-md-8 bg-danger">
+              <div class="card-body">
+                <h5 class="card-title card-title-signo">Picis</h5>
+                <p></p>
+                <button type="button" class="btn btn-primary" (click)="mostrarSigno('p')"><i class="fab fa-hornbill"></i> Ver Horóscopo</button>
+              </div>
+            </div>
+          </div>
+        </div>
+   </div>
+</div>
+<div class="card bg-light" *ngIf="mostrar2">
+  <div class="row no-gutters">
+    <div class="col-8">
+      <div class="card-body">
+        <h1 class="card-title bg-danger text-center">{{signo | uppercase}}</h1>
+        <label class="col-sm-12 col-md-4" >Fecha: {{fecha}}</label>
+        <p class="card-text bg">{{zodiaco.description}}</p>
       </div>
     </div>
-</form>
-<div class="card-header text-center">--Listado de Pasajes--</div>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th scope="col">DNI</th>
-            <th scope="col">Precio</th>
-            <th scope="col">Categoría</th>
-            <th scope="col"><i class="far fa-calendar-alt" style="color: red;"></i> Fecha de transacción</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let item of ventas">
-            <td>{{item.dnipasajero}}</td>
-            <td>{{item.precio | currency:'EUR'}}</td>
-            <td>{{item.categoriapasajero | uppercase}}</td>
-            <td>{{item.fecha | date:'shortDate'}}</td>
-        </tr>
-    </tbody>
-</table>
-
-<div class="card-header text-center">--Resumen Pasajeros--</div>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th scope="col">Total Pasajeros</th>
-            <th scope="col">Adultos</th>
-            <th scope="col">Menores</th>
-            <th scope="col">Jubilados</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>{{cantTotal}}</td>
-            <td>{{cantAdultos}}</td>
-            <td>{{cantMenores}}</td>
-            <td>{{cantJubilados}}</td>
-        </tr>
-    </tbody>
-</table>
+    <div class="col-4">
+      <img *ngIf="img1" src="assets/Imagenes/signos/aries.jpg" class="card-img-personalizado" alt="...">
+      <img *ngIf="img2" src="assets/Imagenes/signos/leo.jpg" class="card-img-personalizado" alt="...">
+      <img *ngIf="img3" src="assets/Imagenes/signos/sagitario.jpg" class="card-img-personalizado" alt="...">
+      <img *ngIf="img4" src="assets/Imagenes/signos/tauro.jpg" class="card-img-personalizado" alt="...">
+      <img *ngIf="img5" src="assets/Imagenes/signos/virgo.jpg" class="card-img-personalizado" alt="...">
+      <img *ngIf="img6" src="assets/Imagenes/signos/capricornio.jpg" class="card-img-personalizado" alt="...">
+      <img *ngIf="img7" src="assets/Imagenes/signos/gemini.jpg" class="card-img-personalizado" alt="...">
+      <img *ngIf="img8" src="assets/Imagenes/signos/libra.jpg" class="card-img-personalizado" alt="...">
+      <img *ngIf="img9" src="assets/Imagenes/signos/aquario.jpg" class="card-img-personalizado" alt="...">
+      <img *ngIf="img10" src="assets/Imagenes/signos/cancer.jpg" class="card-img-personalizado" alt="...">
+      <img *ngIf="img11" src="assets/Imagenes/signos/scorpio.jpg" class="card-img-personalizado" alt="...">
+      <img *ngIf="img12" src="assets/Imagenes/signos/picis.jpg" class="card-img-personalizado" alt="...">
+    </div>
+    <button type="button" class="btn btn-primary" (click)="regresar()"><i class="fab fa-hornbill"></i> Regresar</button>
+  </div>
+</div>

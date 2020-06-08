@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Pasaje } from 'src/app/models/pasaje';
-import { VentasService } from 'src/app/services/ventas.service';
+import { Zodiaco } from 'src/app/models/zodiaco';
+import { HoroscopoService } from 'src/app/services/horoscopo.service';
 
 @Component({
   selector: 'app-punto3',
@@ -9,91 +9,114 @@ import { VentasService } from 'src/app/services/ventas.service';
 })
 export class Punto3Component implements OnInit {
 
-  venta: Pasaje;
-  ventas: Array<Pasaje>;
-
-  monto: number;
-  valor: number=0;
-
-  mostrar1: boolean=false;
+  zodiaco: Zodiaco;
+  signo: string;
+  fecha: Date;
+  mostrar1: boolean=true;
   mostrar2: boolean=false;
+  mostrar3: boolean=true;
 
-  cantTotal: number=1;
-  cantAdultos: number=0;
-  cantMenores: number=1;
-  cantJubilados: number=0;
+  img1: boolean = false;
+  img2: boolean = false;
+  img3: boolean = false;
+  img4: boolean = false;
+  img5: boolean = false;
+  img6: boolean = false;
+  img7: boolean = false;
+  img8: boolean = false;
+  img9: boolean = false;
+  img10: boolean = false;
+  img11: boolean = false;
+  img12: boolean = false;
 
-  constructor(private ventaservice: VentasService) { 
-    this.venta = new Pasaje();
-    this.venta.fecha =  new Date(2020,2,20);
-    this.venta.precio = 5000;
-    this.venta.categoriapasajero = "m";
-    this.venta.dnipasajero = "24504442";
 
-    this.ventas = new Array<Pasaje>();
-    this.ventaservice.registrarVenta(this.venta);
-
-    this.listarVenta();
-
-    this.venta = new Pasaje();
+  constructor(private horoscopoService: HoroscopoService) { 
+    this.zodiaco = new Zodiaco();
+    
+    this.fecha = new Date();
   }
 
   ngOnInit(): void {
   }
 
-  public registrarVenta(){
-    this.venta.fecha = new Date();
-    this.ventaservice.registrarVenta(this.venta);
+  public mostrarSigno(letra: string){
 
-    if(this.venta.categoriapasajero == 'a'){
-      this.cantAdultos ++;
-    }else if(this.venta.categoriapasajero == 'm'){
-      this.cantMenores ++;
-    }else {
-      this.cantJubilados ++;
-    }
-
-    this.monto = 0;
-    this.venta = new Pasaje();
     this.mostrar1 = false;
-  }
+    this.mostrar2 = true;
+    this.mostrar3 = false;
 
-  public listarVenta(){
-    this.ventas = this.ventaservice.listarVenta();
-  }
-
-  public limpiarVenta(){
-    this.venta = new Pasaje();
-    this.mostrar1 = false;
-  }
-
-  public calcularDescuento(){
-    
-    if(this.venta.categoriapasajero == 'm'){
-      this.valor = (this.monto*25)/100;
-      this.venta.precio = this.monto-this.valor;
-      this.mostrar1 = true;
-    }else if(this.venta.categoriapasajero == 'j'){
-      this.valor = (this.monto*50)/100;
-      this.venta.precio = this.monto-this.valor;
-      this.mostrar1 = true;
-    }else if(this.venta.categoriapasajero == 'a'){
-      this.venta.precio = this.monto;
-      this.mostrar1 = true;
-    }else{
-      this.mostrar1 = false;
+    if(letra == 'i'){
+      this.signo = "aries";
+      this.img1 = true;
+    }else if(letra == 'y'){
+      this.signo = "leo";
+      this.img2 = true;
+    }else if(letra == 's'){
+      this.signo = "sagittarius";
+      this.img3 = true;
     }
+    else if(letra == 't'){
+      this.signo = "taurus";
+      this.img4 = true;
+    }
+    else if(letra == 'v'){
+      this.signo = "virgo";
+      this.img5 = true;
+    }
+    else if(letra == 'u'){
+      this.signo = "capricorn";
+      this.img6 = true;
+    }
+    else if(letra == 'g'){
+      this.signo = "gemini";
+      this.img7 = true;
+    }else if(letra == 'l'){
+      this.signo = "libra";
+      this.img8 = true;
+    }else if(letra == 'a'){
+      this.signo = "aquarius";
+      this.img9 = true;
+    }
+    else if(letra == 'c'){
+      this.signo = "cancer";
+      this.img10 = true;
+    }
+    else if(letra == 'e'){
+      this.signo = "scorpio";
+      this.img11 = true;
+    }else if(letra == 'p'){
+      this.signo = "pisces";
+      this.img12 = true;
+    }        
+
+
+    this.horoscopoService.obtenerSigno(this.signo,this.fecha.toString()).subscribe(
+      (result) => {
+        this.zodiaco = result['result'];
+        console.log(this.zodiaco);
+    }, 
+    error => { alert("Error en la petición"); }
+    )
+    
   }
 
-  public mostrarPrecio(){
-    if(this.monto!=0){
-      this.mostrar2 = true;
-    }else{
-      this.mostrar2 = false;
-    }
-
-    this.calcularDescuento();
-    
+  public regresar(){
+    this.zodiaco.description = "";
+    this.mostrar1 = true;
+    this.mostrar2 = false;
+    this.mostrar3 = true;
+    this.img1 = false;
+    this.img2 = false;
+    this.img3 = false;
+    this.img4 = false;
+    this.img5 = false;
+    this.img6 = false;
+    this.img7 = false;
+    this.img8 = false;
+    this.img9 = false;
+    this.img10 = false;
+    this.img11 = false;
+    this.img12 = false;
   }
 
 }
